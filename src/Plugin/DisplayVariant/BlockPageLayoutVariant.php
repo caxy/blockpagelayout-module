@@ -7,6 +7,7 @@
 
 namespace Drupal\block_page_layout\Plugin\DisplayVariant;
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\page_manager\Plugin\DisplayVariant\BlockDisplayVariant;
 use Drupal\layout_plugin\Layout;
 
@@ -42,7 +43,7 @@ class BlockPageLayoutVariant extends BlockDisplayVariant {
   /**
    * {@inheritdoc}
    */
-  public function buildConfigurationForm(array $form, array &$form_state) {
+  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildConfigurationForm($form, $form_state);
 
     // Do not allow blocks to be added until the page variant has been saved.
@@ -62,12 +63,21 @@ class BlockPageLayoutVariant extends BlockDisplayVariant {
   /**
    * {@inheritdoc}
    */
-  public function submitConfigurationForm(array &$form, array &$form_state) {
+  public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
     parent::submitConfigurationForm($form, $form_state);
 
     if (isset($form_state['values']['layout'])) {
       $this->configuration['layout'] = $form_state['values']['layout'];
     }
-
   }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function build() {
+    $regions = parent::build();
+    $layout = $this->getLayout();
+    return $layout->build($regions);
+  }
+
 }
