@@ -66,8 +66,8 @@ class BlockPageLayoutVariant extends BlockDisplayVariant {
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
     parent::submitConfigurationForm($form, $form_state);
 
-    if (isset($form_state['values']['layout'])) {
-      $this->configuration['layout'] = $form_state['values']['layout'];
+    if ($form_state->hasValue('layout')) {
+      $this->configuration['layout'] = $form_state->getValue('layout');
     }
   }
 
