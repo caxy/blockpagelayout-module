@@ -77,7 +77,8 @@ class BlockPageLayoutVariant extends BlockDisplayVariant {
   public function build() {
     $regions = parent::build();
     $layout = $this->getLayout();
-    return $layout->build($regions);
+    $build['regions'] = $layout->build($regions['regions']);
+    return $build;
   }
 
 }
