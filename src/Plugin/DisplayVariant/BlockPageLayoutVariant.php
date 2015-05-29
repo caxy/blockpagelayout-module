@@ -52,7 +52,7 @@ class BlockPageLayoutVariant extends BlockDisplayVariant {
         '#title' => $this->t('Layout'),
         '#type' => 'select',
         '#options' => Layout::getLayoutOptions(array('group_by_category' => TRUE)),
-        '#default_value' => NULL
+        '#default_value' => NULL,
       );
       return $form;
     }
