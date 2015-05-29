@@ -37,7 +37,7 @@ class BlockPageLayoutVariant extends BlockDisplayVariant {
    * {@inheritdoc}
    */
   public function getRegionNames() {
-    return $this->getLayout()->pluginDefinition['region_names'];
+    return $this->getLayout()->getPluginDefinition()['region_names'];
   }
 
   /**
