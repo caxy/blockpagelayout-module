@@ -8,7 +8,7 @@
 namespace Drupal\block_page_layout\Plugin\DisplayVariant;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\page_manager\Plugin\DisplayVariant\BlockDisplayVariant;
+use Drupal\page_manager\Plugin\DisplayVariant\PageBlockDisplayVariant;
 use Drupal\layout_plugin\Layout;
 
 /**
@@ -19,7 +19,7 @@ use Drupal\layout_plugin\Layout;
  *   admin_label = @Translation("Block page (with Layout plugin integration)")
  * )
  */
-class BlockPageLayoutVariant extends BlockDisplayVariant {
+class BlockPageLayoutVariant extends PageBlockDisplayVariant {
   /**
    * Returns instance of the layout plugin used by this page variant.
    *
@@ -74,8 +74,8 @@ class BlockPageLayoutVariant extends BlockDisplayVariant {
   /**
    * {@inheritdoc}
    */
-  public function build() {
-    $regions = parent::build();
+  public function buildRegions(array $build) {
+    $regions = parent::buildRegions($build);
     $layout = $this->getLayout();
     return $layout->build($regions);
   }
