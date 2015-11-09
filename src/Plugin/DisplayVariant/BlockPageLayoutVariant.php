@@ -14,7 +14,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\Context\ContextHandlerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Utility\Token;
-use Drupal\layout_plugin\Plugin\Layout\LayoutPluginManagerInterface;
+use Drupal\layout_plugin\LayoutManagerInterface;
 use Drupal\page_manager\Plugin\DisplayVariant\PageBlockDisplayVariant;
 use Drupal\layout_plugin\Layout;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -30,9 +30,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class BlockPageLayoutVariant extends PageBlockDisplayVariant {
 
   /**
-   * The layout plugin manager.
+   * The layout manager.
    *
-   * @var \Drupal\layout_plugin\Plugin\Layout\LayoutPluginManagerInterface;
+   * @var \Drupal\layout_plugin\LayoutManagerInterface
    */
   protected $layoutManager;
 
@@ -64,10 +64,10 @@ class BlockPageLayoutVariant extends PageBlockDisplayVariant {
    *   The UUID generator.
    * @param \Drupal\Core\Utility\Token $token
    *   The token service.
-   * @param \Drupal\layout_plugin\Plugin\Layout\LayoutPluginManagerInterface $layout_manager
+   * @param \Drupal\layout_plugin\LayoutManagerInterface $layout_manager
    *   The layout plugin manager.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ContextHandlerInterface $context_handler, AccountInterface $account, UuidInterface $uuid_generator, Token $token, LayoutPluginManagerInterface $layout_manager) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, ContextHandlerInterface $context_handler, AccountInterface $account, UuidInterface $uuid_generator, Token $token, LayoutManagerInterface $layout_manager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $context_handler, $account, $uuid_generator, $token);
 
     $this->layoutManager = $layout_manager;
@@ -85,7 +85,7 @@ class BlockPageLayoutVariant extends PageBlockDisplayVariant {
       $container->get('current_user'),
       $container->get('uuid'),
       $container->get('token'),
-      $container->get('plugin.manager.layout_plugin')
+      $container->get('layout_plugin.layout_manager')
     );
   }
 
@@ -107,7 +107,7 @@ class BlockPageLayoutVariant extends PageBlockDisplayVariant {
    */
   public function getLayout() {
     if (!isset($this->layout)) {
-      $this->layout = $this->layoutManager->createInstance($this->configuration['layout'], $this->configuration['layout_settings']);
+      $this->layout = $this->layoutManager->getPluginManager()->createInstance($this->configuration['layout'], $this->configuration['layout_settings']);
     }
     return $this->layout;
   }
@@ -130,7 +130,7 @@ class BlockPageLayoutVariant extends PageBlockDisplayVariant {
       $form['layout'] = [
         '#title' => $this->t('Layout'),
         '#type' => 'select',
-        '#options' => Layout::getLayoutOptions(array('group_by_category' => TRUE)),
+        '#options' => $this->layoutManager->getLayoutOptions(array('group_by_category' => TRUE)),
       ];
     }
     else {
@@ -147,7 +147,7 @@ class BlockPageLayoutVariant extends PageBlockDisplayVariant {
       $form['layout_settings_wrapper']['layout_settings'] = [];
 
       // Get settings form from layout plugin.
-      $layout = $this->layoutManager->createInstance($this->configuration['layout'], $this->configuration['layout_settings'] ?: []);
+      $layout = $this->layoutManager->getPluginManager()->createInstance($this->configuration['layout'], $this->configuration['layout_settings'] ?: []);
       $form['layout_settings_wrapper']['layout_settings'] = $layout->buildConfigurationForm($form['layout_settings_wrapper']['layout_settings'], $form_state);
 
       // Process callback to configure #parents correctly on settings, since
@@ -202,7 +202,7 @@ class BlockPageLayoutVariant extends PageBlockDisplayVariant {
 
     // Validate layout settings.
     if ($form_state->hasValue('layout_settings')) {
-      $layout = $this->layoutManager->createInstance($form_state->getValue('layout'), $this->configuration['layout_settings']);
+      $layout = $this->layoutManager->getPluginManager()->createInstance($form_state->getValue('layout'), $this->configuration['layout_settings']);
       list ($layout_settings_form, $layout_settings_form_state) = $this->getLayoutSettingsForm($form, $form_state);
       $layout->validateConfigurationForm($layout_settings_form, $layout_settings_form_state);
 
