@@ -1,6 +1,6 @@
 name: Block Page (with Layout plugin)
 type: module
-description: 'Block Page (with Layout plugin integration)'
+description: 'Registers a display variant for Page Manager that works just like "Block Page"'
 core: 8.x
 package:  Examples
 dependencies:
