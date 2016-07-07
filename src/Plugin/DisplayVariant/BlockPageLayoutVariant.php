@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\block_page\Plugin\DisplayVariant\BlockDisplayVariant.
- */
-
 namespace Drupal\block_page_layout\Plugin\DisplayVariant;
 
 use Drupal\Component\Utility\NestedArray;

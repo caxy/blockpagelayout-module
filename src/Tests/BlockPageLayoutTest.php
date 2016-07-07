@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\block_page_layout\Tests\BlockPageLayoutTest.
- */
-
 namespace Drupal\block_page_layout\Tests;
 
 use Drupal\simpletest\WebTestBase;
