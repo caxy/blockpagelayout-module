@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\block_page_layout\Tests;
+namespace Drupal\blockpagelayout\Tests;
 
 use Drupal\simpletest\WebTestBase;
 
@@ -19,7 +19,7 @@ class BlockPageLayoutTest extends WebTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['block', 'page_manager', 'block_page_layout', 'layout_plugin_example'];
+  public static $modules = ['block', 'page_manager', 'blockpagelayout', 'layout_plugin_example'];
 
   /**
    * {@inheritdoc}

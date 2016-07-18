@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\block_page_layout\Plugin\DisplayVariant;
+namespace Drupal\blockpagelayout\Plugin\DisplayVariant;
 
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Component\Uuid\UuidInterface;
