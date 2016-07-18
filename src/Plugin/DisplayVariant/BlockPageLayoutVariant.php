@@ -6,6 +6,7 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Block\BlockManager;
 use Drupal\Core\Condition\ConditionManager;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormState;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\Context\ContextHandlerInterface;
@@ -56,21 +57,19 @@ class BlockPageLayoutVariant extends PageBlockDisplayVariant {
    *   The UUID generator.
    * @param \Drupal\Core\Utility\Token $token
    *   The token service.
-   * @param \Drupal\Component\Uuid\UuidInterface $uuid_generator
-   *   The UUID generator.
-   * @param \Drupal\Core\Utility\Token $token
-   *   The token service.
+   * @param \Drupal\Core\Block\BlockManager $block_manager
+   *   The block manager.
    * @param \Drupal\Core\Condition\ConditionManager $condition_manager
    *   The condition manager.
-   * @param \Drupal\panels\Plugin\DisplayBuilder\DisplayBuilderManagerInterface $builder_manager
-   *   The display builder plugin manager.
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
+   *   The module handler.
    * @param \Drupal\layout_plugin\Plugin\Layout\LayoutPluginManagerInterface $layout_manager
    *   The layout plugin manager.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ContextHandlerInterface $context_handler, AccountInterface $account, UuidInterface $uuid_generator, Token $token, BlockManager $block_manager, ConditionManager $condition_manager, LayoutPluginManagerInterface $layout_manager) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, ContextHandlerInterface $context_handler, AccountInterface $account, UuidInterface $uuid_generator, Token $token, BlockManager $block_manager, ConditionManager $condition_manager, ModuleHandlerInterface $module_handler, LayoutPluginManagerInterface $layout_manager) {
     $this->layoutManager = $layout_manager;
 
-    parent::__construct($configuration, $plugin_id, $plugin_definition, $context_handler, $account, $uuid_generator, $token, $block_manager, $condition_manager);
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $context_handler, $account, $uuid_generator, $token, $block_manager, $condition_manager, $module_handler);
   }
 
   /**
@@ -87,6 +86,7 @@ class BlockPageLayoutVariant extends PageBlockDisplayVariant {
       $container->get('token'),
       $container->get('plugin.manager.block'),
       $container->get('plugin.manager.condition'),
+      $container->get('module_handler'),
       $container->get('plugin.manager.layout_plugin')
     );
   }
