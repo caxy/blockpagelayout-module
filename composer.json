@@ -11,5 +11,8 @@
             "name": "Benjamin Doherty",
             "email": "bjd@bangpound.org"
         }
-    ]
+    ],
+    "extra": {
+        "installer-name": "blockpagelayout"
+    }
 }
