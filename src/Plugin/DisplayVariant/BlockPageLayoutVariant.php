@@ -10,6 +10,7 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormState;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\Context\ContextHandlerInterface;
+use Drupal\Core\Render\Element;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Utility\Token;
 use Drupal\layout_plugin\Plugin\Layout\LayoutPluginManagerInterface;
@@ -236,6 +237,12 @@ class BlockPageLayoutVariant extends PageBlockDisplayVariant {
    */
   public function buildRegions(array $build) {
     $regions = parent::buildRegions($build);
+    foreach (Element::children($regions) as $key) {
+      unset($regions[$key]['#prefix']);
+      unset($regions[$key]['#suffix']);
+      $regions[$key]['#region'] = $key;
+      $regions[$key]['#theme_wrappers'][] = 'region';
+    }
     $layout = $this->getLayout();
     return $layout->build($regions);
   }
