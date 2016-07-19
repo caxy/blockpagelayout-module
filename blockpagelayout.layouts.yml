@@ -1,0 +1,6 @@
+blockpagelayout_default:
+  label: Default
+  category: Default
+  regions:
+    main_content:
+      label: Main content
