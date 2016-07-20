@@ -15,7 +15,7 @@ Add this to your `composer.json`:
             "url": "https://github.com/caxy/blockpagelayout-module.git"
         }
     ],
-    "require-dev": {
+    "require": {
         "caxy/blockpagelayout-module": "dev-master"
     }
 }
