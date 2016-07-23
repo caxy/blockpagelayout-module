@@ -19,7 +19,7 @@ class BlockPageLayoutTest extends WebTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['block', 'page_manager', 'blockpagelayout', 'layout_plugin_example'];
+  public static $modules = ['block', 'page_manager', 'page_manager_ui', 'blockpagelayout', 'layout_plugin_example'];
 
   /**
    * {@inheritdoc}
