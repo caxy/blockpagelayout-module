@@ -244,7 +244,10 @@ class BlockPageLayoutVariant extends PageBlockDisplayVariant {
       $regions[$key]['#theme_wrappers'][] = 'region';
     }
     $layout = $this->getLayout();
-    return $layout->build($regions);
+    $build = $layout->build($regions);
+    foreach (Element::properties($regions) as $key) {
+      $build[$key] = $regions[$key];
+    }
+    return $build;
   }
-
 }
