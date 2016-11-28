@@ -3,8 +3,8 @@
     "description": "Registers a display variant for Page Manager that works just like \"Block Page\"",
     "type": "drupal-module",
     "require": {
-        "drupal/page_manager": "1.x-dev",
-        "drupal/layout_plugin": "1.x-dev"
+        "drupal/page_manager": "^1.0",
+        "drupal/layout_plugin": "^1.0"
     },
     "authors": [
         {
